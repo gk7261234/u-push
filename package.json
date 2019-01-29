@@ -24,6 +24,7 @@
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "md5": "^2.2.1",
+    "node-mysql": "^0.4.2",
     "tracer": "^0.9.8"
   }
 }

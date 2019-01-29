@@ -18,10 +18,12 @@ class UmengService {
       appMasterSecret = globalConfig.android.appMasterSecret;
       payload = {
         body: {
-          ticker: body.ticker,
+          ticker: "创投汇推送(android ticker)",
           title: body.title,
           text: body.text,
           after_open: body.after_open,
+          url: body.url,
+          activity: body.activity
         },
         display_type: 'notification'
       }
@@ -35,7 +37,9 @@ class UmengService {
             subtitle: body.title,
             body: body.text
           }
-        }
+        },
+        url: body.url,
+        activity: body.activity
       }
     }
 
@@ -43,8 +47,14 @@ class UmengService {
       appkey: appkey,
       timestamp: timestamp,
       type: body.type,
-      payload: payload
+      payload: payload,
+      production_mode: globalConfig.production_mode
     };
+
+    //ios 推送APNs 分两种不同的模式 开发（sandbox）只能使用开发环境  生产（prod）只能用生产环境
+    // if (body.device_type === 'ios'){
+    //   params.production_mode = globalConfig.ios.production_mode;
+    // }
 
     //单播 和 列播 需指定设备号
     if (body.type !== 'broadcast'){
@@ -53,7 +63,7 @@ class UmengService {
     console.log(JSON.stringify(params))
 
     //签名生成
-    const  md5 = crypto.createHash('md5');
+    const md5 = crypto.createHash('md5');
     let md5_str = `${globalConfig.method}${globalConfig.url}/api/send${JSON.stringify(params)}${appMasterSecret}`;
     md5.update(md5_str);
     let sign = md5.digest('hex');

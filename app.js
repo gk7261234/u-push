@@ -7,7 +7,8 @@ const bodyParser = require('koa-bodyparser');
 
 const umengRouter = require('./rest/index')
 
-onerror(app);
+//error 捕获
+// onerror(app);
 
 //日志中间件
 app.use(convert(logger()));

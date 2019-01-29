@@ -3,6 +3,7 @@
 * @ 用于捕获内部错误，输出日志信息
 */
 const tracer = require('tracer');
+const db = require('../utils/db');
 const logger = tracer.dailyfile({root:'./logs', maxLogFiles: 10, allLogsFileName: 'um_push'});
 
 module.exports = async (ctx,next)=>{
@@ -13,19 +14,25 @@ module.exports = async (ctx,next)=>{
     }
     await next();
   } catch (err){
+    let body = ctx.request.body;
     logger.error(err);
+    let errMsg = '';
     if (!err) {
-      return ctx.error({ msg:new Error('未知错误!') });
+      errMsg = '未知错误';
     }
     if (typeof(err)=='string') {
-      return ctx.error({ msg:new Error(err) });
+      errMsg = err;
     }
     if (err.body){
-      return ctx.error({msg: 'fail', data:err.body.data});
+      errMsg = JSON.stringify(err.body.data);
     }
-    return ctx.error({msg:'服务器错误!'});
+    let add_log = await db.commonSqlObj(`INSERT INTO app_push_log 
+      (device_type,type,title,text,device_tokens,after_open,url,activity,result,timer,data) 
+      VALUES
+      ("${body.device_type}","${body.type}","${body.title}","${body.text}","${body.device_tokens}","${body.after_open}","${body.url}","${body.activity}","FAIL","${body.timer}",'${errMsg}');`);
+    return ctx.error({data: errMsg});
   }
-}
+};
 
 
 
