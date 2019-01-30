@@ -39,10 +39,11 @@ node koa2 es6 async/await Restful Api
              //   "go_app": 打开应用
              //   "go_url": 跳转到URL
              //   "go_activity": 打开特定的activity
- url: // 当after_open=go_url时，必填。
-      // 通知栏点击后跳转的URL，要求以http或者https开头
- activity:  // 当after_open=go_activity时，必填。
-              // 通知栏点击后打开的Activity
+ open_identify: 点击推送打开地址 （为空，默认打开app）
+             url: // 当after_open=go_url时，必填。
+                  // 通知栏点击后跳转的URL，要求以http或者https开头
+             activity:  // 当after_open=go_activity时，必填。
+                          // 通知栏点击后打开的Activity
  }
  
 response: 
@@ -53,7 +54,6 @@ response:
                       "msg_id": "uu2jhxb154829838900601"
                   }
               }
-              
      error: {
                  "code": "xxx",
                  "msg": "fail",

@@ -21,11 +21,14 @@ class UmengService {
           ticker: "创投汇推送(android ticker)",
           title: body.title,
           text: body.text,
-          after_open: body.after_open,
-          url: body.url,
-          activity: body.activity
+          after_open: body.after_open
         },
         display_type: 'notification'
+      };
+      if (body.after_open==='go_url'){
+        payload.body.url = body.open_identify;
+      }else if (body.after_open==='go_activity'){
+        payload.body.activity = body.open_identify;
       }
     } else {
       appkey = globalConfig.ios.appkey;
@@ -37,9 +40,14 @@ class UmengService {
             subtitle: body.title,
             body: body.text
           }
-        },
-        url: body.url,
-        activity: body.activity
+        }
+      };
+      if (body.after_open==='go_url'){
+        payload.url = body.open_identify;
+        payload.activity = "";
+      }else if (body.after_open==='go_activity'){
+        payload.url = "";
+        payload.activity = body.open_identify;
       }
     }
 
@@ -51,14 +59,14 @@ class UmengService {
       production_mode: globalConfig.production_mode
     };
 
-    //ios 推送APNs 分两种不同的模式 开发（sandbox）只能使用开发环境  生产（prod）只能用生产环境
-    // if (body.device_type === 'ios'){
-    //   params.production_mode = globalConfig.ios.production_mode;
-    // }
-
     //单播 和 列播 需指定设备号
     if (body.type !== 'broadcast'){
       params.device_tokens = body.device_tokens;
+    }
+
+    //是否有定时任务
+    if(body.timer){
+      params.policy = {start_time: body.timer};
     }
     console.log(JSON.stringify(params))
 

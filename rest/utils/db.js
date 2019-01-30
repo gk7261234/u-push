@@ -1,13 +1,8 @@
 const mysql = require('mysql');
+const config = require('../../config/common');
 
-const pool = mysql.createPool({
-  connectionLimit:10,
-  host: '127.0.0.1',
-  user: 'root',
-  password: '123456',
-  database: 'test',
-  port: 3306
-});
+const dbConfig = config[process.env.NODE_ENV||'development']['db'];
+const pool = mysql.createPool(dbConfig);
 
 module.exports = {
   commonSqlObj: function (sql) {

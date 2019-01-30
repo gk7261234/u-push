@@ -13,6 +13,14 @@ module.exports = {
       url: 'http://msg.umeng.com',                         //umeng 请求地址
       method: 'POST',                                       //请求方式
       production_mode: false,                              //环境模式 false 开发 true 生产
+    },
+    db: {
+      connectionLimit:10,
+      host: '127.0.0.1',
+      user: 'root',
+      password: '123456',
+      database: 'test',
+      port: 3306
     }
   },
   production: {
@@ -29,6 +37,14 @@ module.exports = {
       },
       url: 'http://msg.umeng.com/api/send',
       method: 'POST'
+    },
+    db: {
+      connectionLimit:10,
+      host: 'xxxxx',
+      user: 'xxxxx',
+      password: 'xxxxx',
+      database: 'xxxxx',
+      port: 3306
     }
   }
 };
