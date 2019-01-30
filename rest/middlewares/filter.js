@@ -35,7 +35,7 @@ module.exports = async (ctx,next)=>{
       add_attr = '(push_id,device_type,type,title,text,device_tokens,after_open,url,activity,result,data)';
       add_val = `("${body.push_id}","${body.device_type}","${body.type}","${body.title}","${body.text}","${body.device_tokens}","${body.after_open}","${body.url}","${body.activity}","FAIL",'${errMsg}')`;
     }
-    let add_log = await db.commonSqlObj(`INSERT INTO app_push_activity_logs ${add_attr} VALUES ${add_val};`);
+    let add_log = await db.commonSqlObj(`INSERT INTO app_push_logs ${add_attr} VALUES ${add_val};`);
     console.log(add_log);
     return ctx.error({data: errMsg});
   }
