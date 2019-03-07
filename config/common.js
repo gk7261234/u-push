@@ -16,10 +16,10 @@ module.exports = {
     },
     db: {
       connectionLimit:10,
-      host: '127.0.0.1',
-      user: 'root',
-      password: '123456',
-      database: 'test',
+      host: 'mysql56.rdsmarphih5oppu.rds.bj.baidubce.com',
+      user: 'vc265_test',
+      password: '1pO398hH_',
+      database: 'vc265_test',
       port: 3306
     }
   },

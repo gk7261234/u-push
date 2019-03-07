@@ -62,3 +62,5 @@ response:
                      "error_msg": "xxx"
                  }
              }
+## 需要改进的地方
+1.将一些通用的中间件绑定到app（应用）上，以便全局通用。（如： db，logger，app.context.db = db();）
